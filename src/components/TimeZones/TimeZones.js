@@ -25,7 +25,7 @@ function TimeZones() {
   const cellsWithHours = hours.map((hour) => <TableCell key={hour} align="right" className={classes.tableCell}>{hour}</TableCell>);
 
   return (
-    <Container fixed>
+    <Container disableGutters={true}>
       <Box py={3}>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} size="small">
