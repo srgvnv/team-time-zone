@@ -7,7 +7,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import { makeStyles } from '@mui/styles';
+import makeStyles from '@mui/styles/makeStyles';
 
 // TODO: remove this import
 import data from './data.json';
