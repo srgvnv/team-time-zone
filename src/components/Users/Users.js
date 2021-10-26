@@ -1,5 +1,11 @@
+import teams from "../../teams"
+import users from "../../users"
+
 function Users() {
-  return (
+    console.log(teams)
+    console.log(users)
+
+    return (
     <div>users page page</div>
   );
 }
