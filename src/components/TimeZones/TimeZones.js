@@ -34,15 +34,13 @@ function TimeZones() {
 
   const hours = [...Array(24).keys()];
   const cells = {
-    utcTime: [],
-    localTime: [],
+    localUtcTime: [],
     withoutHours: [],
   };
   hours.forEach((hour) => {
     const computedClasses = `${classes.tableCellPaddingRight} ${currentHour === hour ? classes.tableCellCurrentHour : ''}`;
 
-    cells.utcTime.push(<TableCell key={hour} align="center" className={computedClasses}>{Math.abs(hour + (date.getTimezoneOffset() / 60))}</TableCell>);
-    cells.localTime.push(<TableCell key={hour} align="center" className={computedClasses}>{hour}</TableCell>);
+    cells.localUtcTime.push(<TableCell key={hour} align="center" className={computedClasses}>{Math.abs(hour + (date.getTimezoneOffset() / 60))}</TableCell>);
     cells.withoutHours.push(<TableCell key={hour} align="center" className={computedClasses}/>);
   });
 
@@ -77,15 +75,11 @@ function TimeZones() {
           >
             <TableHead>
               <TableRow sx={{ '& th': { borderBottomWidth: 2, borderTopWidth: 0 }, '& th:last-child': { borderRightWidth: 0 } }}>
-                <TableCell component="th" scope="row" sx={rightBorderStyle}>Your local time</TableCell>
-                {cells.localTime}
+                <TableCell component="th" scope="row" sx={rightBorderStyle}>Your local UTC time</TableCell>
+                {cells.localUtcTime}
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow sx={{ '& td:last-child': { borderRightWidth: 0 }, '& td': { borderBottomWidth: 2 } }}>
-                <TableCell sx={rightBorderStyle}>UTC time</TableCell>
-                {cells.utcTime}
-              </TableRow>
               {data.map((person) => (
                 <TableRow key={person.name} sx={{ '&:last-child td, &:last-child th': { borderBottomWidth: 0 }, '& td:last-child': { borderRightWidth: 0 } }}>
                   <TableCell component="th" scope="row" sx={rightBorderStyle}>{person.name}</TableCell>
