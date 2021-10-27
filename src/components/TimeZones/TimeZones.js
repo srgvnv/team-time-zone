@@ -32,11 +32,13 @@ const useStyles = makeStyles({
 });
 
 function TimeZones() {
+  const [persons, setPersons] = useState(data);
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - persons.length) : 0;
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -102,8 +104,8 @@ function TimeZones() {
             </TableHead>
             <TableBody>
               {(rowsPerPage > 0
-                  ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  : data
+                  ? persons.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  : persons
               ).map((person) => (
                 <TableRow key={person.name} sx={{ '& td:last-child': { borderRightWidth: 0 } }}>
                   <TableCell component="th" scope="row" sx={rightBorderStyle}>{person.name}</TableCell>
@@ -121,7 +123,7 @@ function TimeZones() {
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                  count={data.length}
+                  count={persons.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   SelectProps={{
@@ -139,7 +141,7 @@ function TimeZones() {
           </Table>
         </TableContainer>
       </Box>
-      <TeamSelect/>
+      <TeamSelect setPersons={setPersons}/>
     </Container>
   );
 }
