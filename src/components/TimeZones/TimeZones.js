@@ -41,9 +41,9 @@ function TimeZones() {
   hours.forEach((hour) => {
     const computedClasses = `${classes.tableCellPaddingRight} ${currentHour === hour ? classes.tableCellCurrentHour : ''}`;
 
-    cells.utcTime.push(<TableCell key={hour} align="right" className={computedClasses}>{Math.abs(hour + (date.getTimezoneOffset() / 60))}</TableCell>);
-    cells.localTime.push(<TableCell key={hour} align="right" className={computedClasses}>{hour}</TableCell>);
-    cells.withoutHours.push(<TableCell key={hour} align="right" className={computedClasses}>&nbsp;</TableCell>);
+    cells.utcTime.push(<TableCell key={hour} align="center" className={computedClasses}>{Math.abs(hour + (date.getTimezoneOffset() / 60))}</TableCell>);
+    cells.localTime.push(<TableCell key={hour} align="center" className={computedClasses}>{hour}</TableCell>);
+    cells.withoutHours.push(<TableCell key={hour} align="center" className={computedClasses}/>);
   });
 
   /**
@@ -57,7 +57,9 @@ function TimeZones() {
 
     workingHours.forEach((item) => {
       for (let i = +item.from; i < +item.to; i++) {
-        filledCells[i] = <TableCell key={i} align="right" className={`${classes.tableCellPaddingRight} ${classes.tableCellWorkingHour}`}>{i}</TableCell>;
+        const computedClasses = `${classes.tableCellPaddingRight} ${currentHour === i ? classes.tableCellCurrentHour : classes.tableCellWorkingHour}`;
+
+        filledCells[i] = <TableCell key={i} align="center" className={computedClasses}>{i}</TableCell>;
       }
     });
 
@@ -80,7 +82,7 @@ function TimeZones() {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow sx={{ '& td:last-child': { borderRightWidth: 0 } }}>
+              <TableRow sx={{ '& td:last-child': { borderRightWidth: 0 }, '& td': { borderBottomWidth: 2 } }}>
                 <TableCell sx={rightBorderStyle}>UTC time</TableCell>
                 {cells.utcTime}
               </TableRow>
