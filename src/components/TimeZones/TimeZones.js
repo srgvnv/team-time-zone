@@ -1,13 +1,17 @@
+import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
+import TableFooter from '@mui/material/TableFooter';
+import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import makeStyles from '@mui/styles/makeStyles';
+import TablePaginationActions from './components/TablePaginationActions';
 
 // TODO: remove this import
 import data from './data.json';
@@ -27,6 +31,21 @@ const useStyles = makeStyles({
 });
 
 function TimeZones() {
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const classes = useStyles();
 
   const date = new Date();
@@ -81,13 +100,41 @@ function TimeZones() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((person) => (
-                <TableRow key={person.name} sx={{ '&:last-child td, &:last-child th': { borderBottomWidth: 0 }, '& td:last-child': { borderRightWidth: 0 } }}>
+              {(rowsPerPage > 0
+                  ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  : data
+              ).map((person) => (
+                <TableRow key={person.name} sx={{ '& td:last-child': { borderRightWidth: 0 } }}>
                   <TableCell component="th" scope="row" sx={rightBorderStyle}>{person.name}</TableCell>
                   {fillWorkingHours(person.working_hours)}
                 </TableRow>
               ))}
+
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 33 * emptyRows }}>
+                  <TableCell colSpan={hours.length + 1} />
+                </TableRow>
+              )}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  count={data.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'rows per page',
+                    },
+                    native: true,
+                  }}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
           </Table>
         </TableContainer>
       </Box>
