@@ -1,7 +1,5 @@
 [
   {
-    "ok": true,
-    "user": {
       "id": "U03SU7F7N",
       "team_id": "T02SWT9LF",
       "name": "jesse",
@@ -80,11 +78,8 @@
       "updated": 1634882539,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U03T7HSU9",
       "team_id": "T02SWT9LF",
       "name": "ray",
@@ -158,11 +153,8 @@
       "updated": 1634157342,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U0420TK0L",
       "team_id": "T02SWT9LF",
       "name": "jerry",
@@ -236,11 +228,8 @@
       "updated": 1635132901,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U92C0EURE",
       "team_id": "T02SWT9LF",
       "name": "will",
@@ -310,11 +299,8 @@
       "updated": 1635127055,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "UCW1L698Q",
       "team_id": "T02SWT9LF",
       "name": "joe.burianek",
@@ -384,11 +370,8 @@
       "updated": 1634157374,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U0JSAH3NY",
       "team_id": "T02SWT9LF",
       "name": "allen",
@@ -462,11 +445,8 @@
       "updated": 1634157349,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "UCWH16R0U",
       "team_id": "T02SWT9LF",
       "name": "edward.angert",
@@ -537,11 +517,8 @@
       "updated": 1635163157,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "UN3RBU1UG",
       "team_id": "T02SWT9LF",
       "name": "carolyn.shannon",
@@ -608,11 +585,8 @@
       "updated": 1634934844,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U01S0JPJWCF",
       "team_id": "T02SWT9LF",
       "name": "joan.edwards",
@@ -678,11 +652,8 @@
       "updated": 1635159655,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U021RS7GA5T",
       "team_id": "T02SWT9LF",
       "name": "michelle.colon",
@@ -749,11 +720,8 @@
       "updated": 1634930357,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U03TFV6FK",
       "team_id": "T02SWT9LF",
       "name": "alex",
@@ -827,11 +795,8 @@
       "updated": 1634157348,
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U041ZHRBT",
       "team_id": "T02SWT9LF",
       "name": "ales",
@@ -906,11 +871,8 @@
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE",
       "locale": "en-US"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U0421K4F8",
       "team_id": "T02SWT9LF",
       "name": "jiri",
@@ -989,11 +951,8 @@
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE",
       "locale": "en-US"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "USHFPGWJE",
       "team_id": "T02SWT9LF",
       "name": "alexander.sukhodolsky",
@@ -1056,11 +1015,8 @@
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE",
       "locale": "en-US"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U1X899XQQ",
       "team_id": "T02SWT9LF",
       "name": "shane",
@@ -1131,11 +1087,8 @@
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE",
       "locale": "en-US"
-    }
   },
   {
-    "ok": true,
-    "user": {
       "id": "U7U409ASF",
       "team_id": "T02SWT9LF",
       "name": "jacob",
@@ -1212,7 +1165,6 @@
       "is_email_confirmed": true,
       "who_can_share_contact_card": "EVERYONE",
       "locale": "en-US"
-    }
   },
   {
     "id": "U06358NM8",

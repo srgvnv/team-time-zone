@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Container from '@mui/material/Container';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -68,31 +68,16 @@ function mapUsersToWorkHours(users) {
   }));
 }
 
-function getParseUsersList() {
-  return users.map((item) => {
-    if ('ok' in item) {
-      return item.user;
-    }
-
-    return item;
-  });
-}
-
 function TeamSelect(props) {
   const [team, setTeam] = useState(null);
-  const [parsedUsers, setParsedUsers] = useState(null);
   const [teamUsers, setTeamUsers] = useState(null);
-
-  useEffect(() => {
-    setParsedUsers(getParseUsersList());
-  }, []);
 
   const handleTeamChange = (event) => {
     setTeam(teams.find(item => item.id === event.target.value));
   };
 
   const handleTeamSubmit = () => {
-    setTeamUsers(team.users.map((userId) => parsedUsers.find(user => user.id === userId)));
+    setTeamUsers(team.users.map((userId) => users.find(user => user.id === userId)));
   };
 
   const handleTeamDisplay = () => {

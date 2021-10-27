@@ -1,6 +1,19 @@
 [
   {
-    "name": "Firstname Lastname1",
+    "name": "Select User1",
+    "working_hours": [
+      {
+        "from": 0,
+        "to": 1
+      },
+      {
+        "from": 17,
+        "to": 24
+      }
+    ]
+  },
+  {
+    "name": "Select User2",
     "working_hours": [
       {
         "from": "10",
@@ -9,16 +22,7 @@
     ]
   },
   {
-    "name": "Firstname Lastname2",
-    "working_hours": [
-      {
-        "from": "10",
-        "to": "18"
-      }
-    ]
-  },
-  {
-    "name": "Firstname Lastname3",
+    "name": "Select User3",
     "working_hours": [
       {
         "from": "14",
@@ -27,7 +31,7 @@
     ]
   },
   {
-    "name": "Firstname Lastname4",
+    "name": "Select User4",
     "working_hours": [
       {
         "from": "10",
@@ -36,7 +40,7 @@
     ]
   },
   {
-    "name": "Firstname Lastname5",
+    "name": "Select User5",
     "working_hours": [
       {
         "from": "11",
@@ -45,7 +49,7 @@
     ]
   },
   {
-    "name": "Firstname Lastname6",
+    "name": "Select User6",
     "working_hours": [
       {
         "from": "12",
@@ -54,7 +58,7 @@
     ]
   },
   {
-    "name": "Firstname Lastname7",
+    "name": "Select User7",
     "working_hours": [
       {
         "from": "8",
@@ -63,7 +67,7 @@
     ]
   },
   {
-    "name": "Firstname Lastname8",
+    "name": "Select User8",
     "working_hours": [
       {
         "from": "9",
@@ -72,7 +76,7 @@
     ]
   },
   {
-    "name": "Firstname Lastname9",
+    "name": "Select User9",
     "working_hours": [
       {
         "from": "11",
@@ -81,7 +85,7 @@
     ]
   },
   {
-    "name": "Firstname Lastname10",
+    "name": "Select User10",
     "working_hours": [
       {
         "from": "8",
@@ -94,7 +98,7 @@
     ]
   },
   {
-    "name": "Firstname Lastname11",
+    "name": "Select User11",
     "working_hours": [
       {
         "from": "10",

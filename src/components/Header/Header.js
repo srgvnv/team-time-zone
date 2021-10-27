@@ -7,11 +7,17 @@ import useTheme from '@mui/material/styles/useTheme';
 import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import DrawerComponent from '../Drawer/DrawerComponent';
+import * as React from "react";
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip/Tooltip";
 
 const useStyles = makeStyles((theme) => ({
   navLinks: {
     marginLeft: theme.spacing(5),
     display: 'flex',
+      width: '100%',
+      alignItems: 'center',
   },
   logo: {
     cursor: 'pointer',
@@ -25,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: '1px solid #fff',
     },
   },
+    profile: {
+        color: '#fff',
+        marginLeft: 'auto',
+    }
 }));
 
 function Header() {
@@ -44,15 +54,19 @@ function Header() {
             <DrawerComponent />
           :
             <div className={classes.navLinks}>
-              <Link to="/" className={classes.link}>
-                Time zones
-              </Link>
-              <Link to="/users" className={classes.link}>
-                Users
-              </Link>
-              <Link to="/profile" className={classes.link}>
-                My profile
-              </Link>
+                <Link to="/" className={classes.link}>
+                    1. Select Users
+                </Link>
+                <Link to="/timezones" className={classes.link}>
+                    2. Compare Time Zones
+                </Link>
+                <Link to="/profile" className={classes.profile}>
+                    <Tooltip title="Profile">
+                        <IconButton>
+                            <PersonOutlineIcon style={{fill: "#fff"}} />
+                        </IconButton>
+                    </Tooltip>
+                </Link>
             </div>
         }
       </Toolbar>
