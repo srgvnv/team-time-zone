@@ -31,6 +31,7 @@ function TimeZones() {
 
   const date = new Date();
   const currentHour = date.getHours();
+  const offsetHours = (date.getTimezoneOffset() / 60);
 
   const hours = [...Array(24).keys()];
   const cells = {
@@ -40,7 +41,7 @@ function TimeZones() {
   hours.forEach((hour) => {
     const computedClasses = `${classes.tableCellPaddingRight} ${currentHour === hour ? classes.tableCellCurrentHour : ''}`;
 
-    cells.localUtcTime.push(<TableCell key={hour} align="center" className={computedClasses}>{Math.abs(hour + (date.getTimezoneOffset() / 60))}</TableCell>);
+    cells.localUtcTime.push(<TableCell key={hour} align="center" className={computedClasses}>{Math.abs(hour + offsetHours)}</TableCell>);
     cells.withoutHours.push(<TableCell key={hour} align="center" className={computedClasses}/>);
   });
 
