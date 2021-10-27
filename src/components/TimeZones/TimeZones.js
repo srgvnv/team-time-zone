@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import makeStyles from '@mui/styles/makeStyles';
 import TablePaginationActions from './components/TablePaginationActions';
+import TeamSelect from './components/TeamSelect';
 
 // TODO: remove this import
 import data from './data.json';
@@ -138,6 +139,7 @@ function TimeZones() {
           </Table>
         </TableContainer>
       </Box>
+      <TeamSelect/>
     </Container>
   );
 }
