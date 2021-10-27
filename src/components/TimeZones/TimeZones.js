@@ -24,10 +24,10 @@ const useStyles = makeStyles({
     border: '1px solid #e0e0e0',
   },
   tableCellWorkingHour: {
-    backgroundColor: '#4dabf5',
+    backgroundColor: '#bbdefb',
   },
   tableCellCurrentHour: {
-    backgroundColor: '#e57373 !important',
+    backgroundColor: '#66bb6a !important',
   }
 });
 
