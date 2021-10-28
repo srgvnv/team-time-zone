@@ -12,9 +12,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import makeStyles from '@mui/styles/makeStyles';
 import TablePaginationActions from './components/TablePaginationActions';
-import TeamSelect from './components/TeamSelect';
 
-// TODO: remove this import
 import data from './data.json';
 import users from '../../users.json';
 
@@ -33,59 +31,18 @@ const useStyles = makeStyles({
 });
 
 function mapUsersToWorkHours(users) {
-    const workHours = [
-        [
-            {
-                'from': '10',
-                'to': '18'
-            }
-        ],
-        [
-            {
-                'from': '11',
-                'to': '13'
-            },
-            {
-                'from': '15',
-                'to': '20'
-            }
-        ],
-        [
-            {
-                'from': '8',
-                'to': '16'
-            }
-        ],
-        [
-            {
-                'from': '14',
-                'to': '22'
-            }
-        ],
-        [
-            {
-                'from': '8',
-                'to': '12'
-            },
-            {
-                'from': '15',
-                'to': '19'
-            }
-        ],
-    ];
-
     return users.map((user) => ({
         name: user.real_name,
-        //working_hours: workHours[Math.floor(Math.random() * workHours.length)],
         working_hours: getWorkingHours(user)
     }));
 }
 
 function getWorkingHours(user) {
     let workingHours = []
+    const offsetHours = -(new Date()).getTimezoneOffset() / 60
 
-    let from = 24 - 11 - user.tz_offset / 60 / 60
-    let to = 24 - 3 - user.tz_offset / 60 / 60
+    let from = 10 + offsetHours - user.tz_offset / 60 / 60
+    let to = 18 + offsetHours - user.tz_offset / 60 / 60
     let to2 = 0
 
     if (to > 23) {
@@ -113,7 +70,7 @@ function getWorkingHours(user) {
 }
 
 function TimeZones(props) {
-    const [persons, setPersons] = useState(props.users.length ? mapUsersToWorkHours(props.users.map(userId => users.find(user => user.id === userId))) : data);
+    const [persons] = useState(props.users.length ? mapUsersToWorkHours(props.users.map(userId => users.find(user => user.id === userId))) : data);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -135,7 +92,7 @@ function TimeZones(props) {
     const highest = arr => {
         let result = {};
 
-        (arr || []).map( number => {
+        (arr || []).forEach( number => {
             if (result[number]) {
                 result[number]++
             } else {
@@ -157,7 +114,7 @@ function TimeZones(props) {
     }
 
     const allHours = []
-    persons.map(person => person.working_hours.map(working_hour => {
+    persons.forEach(person => person.working_hours.forEach(working_hour => {
         for (let i = +working_hour.from; i <= +working_hour.to; i++) {
             allHours.push(i)
         }
@@ -191,7 +148,6 @@ function TimeZones(props) {
         } else {
             filledCells[i] = <TableCell key={i+Math.random()} align="center" className={`${classes.tableCellPaddingRight} ${currentHour === i && classes.tableCellCurrentHour}`}/>
         }
-        // чаще встречается последняя i - tableCellCurrentHour
     }
 
     return filledCells;
