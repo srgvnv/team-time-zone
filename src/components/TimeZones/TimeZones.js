@@ -12,10 +12,9 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import makeStyles from '@mui/styles/makeStyles';
 import TablePaginationActions from './components/TablePaginationActions';
-import TeamSelect from './components/TeamSelect';
 
-// TODO: remove this import
 import data from './data.json';
+import users from '../../users.json';
 
 const rightBorderStyle = { borderRight: '2px solid #e0e0e0' };
 const useStyles = makeStyles({
@@ -31,11 +30,50 @@ const useStyles = makeStyles({
   }
 });
 
-function TimeZones() {
-  const [persons, setPersons] = useState(data);
+function mapUsersToWorkHours(users) {
+    return users.map((user) => ({
+        name: user.real_name,
+        working_hours: getWorkingHours(user)
+    }));
+}
+
+function getWorkingHours(user) {
+    let workingHours = []
+    const offsetHours = -(new Date()).getTimezoneOffset() / 60
+
+    let from = 10 + offsetHours - user.tz_offset / 60 / 60
+    let to = 18 + offsetHours - user.tz_offset / 60 / 60
+    let to2 = 0
+
+    if (to > 23) {
+        to2 = to - 24
+        to = 24
+    }
+
+    if (to2 > 0) {
+        workingHours.push(
+            {
+                'from': 0,
+                'to': to2
+            }
+        )
+    }
+
+    workingHours.push(
+        {
+            'from': from,
+            'to': to
+        }
+    )
+
+    return workingHours
+}
+
+function TimeZones(props) {
+    const [persons] = useState(props.users.length ? mapUsersToWorkHours(props.users.map(userId => users.find(user => user.id === userId))) : data);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - persons.length) : 0;
@@ -51,20 +89,47 @@ function TimeZones() {
 
   const classes = useStyles();
 
-  const date = new Date();
-  const currentHour = date.getHours();
-  const offsetHours = (date.getTimezoneOffset() / 60);
+    const highest = arr => {
+        let result = {};
 
-  const hours = [...Array(24).keys()];
+        (arr || []).forEach( number => {
+            if (result[number]) {
+                result[number]++
+            } else {
+                result[number] = 1
+            }
+        })
+
+        const sorted = Object.keys(result).sort((a, b) => result[a] - result[b])
+
+        let max = +sorted[sorted.length-1]
+
+        for (let i = 10; i > 0; i--) {
+            if (max === 24 && result[24] === result[i]) {
+                max = i
+            }
+        }
+
+        return max
+    }
+
+    const allHours = []
+    persons.forEach(person => person.working_hours.forEach(working_hour => {
+        for (let i = +working_hour.from; i <= +working_hour.to; i++) {
+            allHours.push(i)
+        }
+    }))
+    const currentHour = highest(allHours) // date.getHours();
+
+    const hours = [...Array(24).keys(), 0];
+
   const cells = {
     localUtcTime: [],
-    withoutHours: [],
   };
-  hours.forEach((hour) => {
+  hours.forEach((hour, i) => {
     const computedClasses = `${classes.tableCellPaddingRight} ${currentHour === hour ? classes.tableCellCurrentHour : ''}`;
 
-    cells.localUtcTime.push(<TableCell key={hour} align="center" className={computedClasses}>{Math.abs(hour + offsetHours)}</TableCell>);
-    cells.withoutHours.push(<TableCell key={hour} align="center" className={computedClasses}/>);
+    cells.localUtcTime.push(<TableCell key={hour+Math.random()} align="center" className={computedClasses}>{Math.abs(hour)}:00</TableCell>);
   });
 
   /**
@@ -74,15 +139,16 @@ function TimeZones() {
    * @returns {JSX.Element[]}
    */
   const fillWorkingHours = (workingHours) => {
-    const filledCells = [...cells.withoutHours];
+    const filledCells = [];
 
-    workingHours.forEach((item) => {
-      for (let i = +item.from; i < +item.to; i++) {
-        const computedClasses = `${classes.tableCellPaddingRight} ${currentHour === i ? classes.tableCellCurrentHour : classes.tableCellWorkingHour}`;
-
-        filledCells[i] = <TableCell key={i} align="center" className={computedClasses}>{i}</TableCell>;
-      }
-    });
+    for (let i = 0; i <= 24; i++) {
+        if (workingHours.find(workingHour => i >= +workingHour.from && i <= +workingHour.to)) {
+            filledCells[i] = <TableCell key={i+Math.random()} align="center" className={
+                `${classes.tableCellPaddingRight} ${classes.tableCellWorkingHour} ${currentHour === i && classes.tableCellCurrentHour}`}>{i === 24 ? 0 : i}:00</TableCell>;
+        } else {
+            filledCells[i] = <TableCell key={i+Math.random()} align="center" className={`${classes.tableCellPaddingRight} ${currentHour === i && classes.tableCellCurrentHour}`}/>
+        }
+    }
 
     return filledCells;
   };
@@ -98,7 +164,7 @@ function TimeZones() {
           >
             <TableHead>
               <TableRow sx={{ '& th': { borderBottomWidth: 2, borderTopWidth: 0 }, '& th:last-child': { borderRightWidth: 0 } }}>
-                <TableCell component="th" scope="row" sx={rightBorderStyle}>Your local UTC time</TableCell>
+                <TableCell component="th" scope="row" sx={rightBorderStyle}>Local Time</TableCell>
                 {cells.localUtcTime}
               </TableRow>
             </TableHead>
@@ -122,13 +188,14 @@ function TimeZones() {
             <TableFooter>
               <TableRow>
                 <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                  rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
                   count={persons.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
+                  labelRowsPerPage='Users per page'
                   SelectProps={{
                     inputProps: {
-                      'aria-label': 'rows per page',
+                      'aria-label': 'users per page',
                     },
                     native: true,
                   }}
@@ -141,7 +208,7 @@ function TimeZones() {
           </Table>
         </TableContainer>
       </Box>
-      <TeamSelect setPersons={setPersons}/>
+      {/*<TeamSelect setPersons={setPersons}/>*/}
     </Container>
   );
 }

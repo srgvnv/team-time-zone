@@ -8,12 +8,18 @@ import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import DrawerComponent from '../Drawer/DrawerComponent';
 import {GoogleLogin, GoogleLogout} from 'react-google-login';
+import * as React from "react";
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
+import IconButton from "@mui/material/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   navLinks: {
     marginLeft: theme.spacing(5),
     display: 'flex',
     width: '100%',
+    alignItems: 'center',
   },
   logo: {
     cursor: 'pointer',
@@ -27,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: '1px solid #fff',
     },
   },
+  profile: {
+      color: '#fff',
+      marginLeft: 'auto',
+  }
 }));
 
 function Header(props) {
@@ -55,34 +65,40 @@ function Header(props) {
             <DrawerComponent setUser={setUser} user={user}/>
           :
             <div className={classes.navLinks}>
-              <Link to="/" className={classes.link}>
-                Time zones
-              </Link>
-              <Link to="/users" className={classes.link}>
-                Users
-              </Link>
-              {user
-              ? <Link to="/profile" className={classes.link}>
-                My profile
-              </Link>
-              : null
-              }
-              {user ? <GoogleLogout
-                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                  onLogoutSuccess={logOutSuccess}
-                  render={(renderProps) => {
-                    return <a className={classes.link} href={'/'} onClick={renderProps.onClick} style={{marginLeft: 'auto'}}>Logout</a>
-                  }}
-                />
-                : <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                onSuccess={loginSuccess}
-                cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
-                render={(renderProps) => {
-                return <a className={classes.link} href={'/'} onClick={renderProps.onClick} style={{marginLeft: 'auto'}}>Login</a>
-              }}
-                />
+                <Link to="/" className={classes.link}>
+                    1. Select Users
+                </Link>
+                <Link to="/timezones" className={classes.link}>
+                    2. Compare Time Zones
+                </Link>
+              {user ?
+                  <Link to="/profile" className={classes.profile}>
+                          <IconButton>
+                              <PersonOutlineIcon style={{fill: "#fff"}} />
+                          </IconButton>
+                          <GoogleLogout
+                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                            onLogoutSuccess={logOutSuccess}
+                            render={(renderProps) => {
+                              return  <IconButton onClick={renderProps.onClick}>
+                                <LogoutIcon style={{fill: "#fff"}} />
+                              </IconButton>
+                            }}
+                          />
+                  </Link>
+                  : <Link to="/" className={classes.profile}>
+                    <GoogleLogin
+                      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                      onSuccess={loginSuccess}
+                      cookiePolicy={'single_host_origin'}
+                      isSignedIn={true}
+                      render={(renderProps) => {
+                        return <IconButton onClick={renderProps.onClick}>
+                          <LoginIcon style={{fill: "#fff"}} />
+                        </IconButton>
+                      }}
+                    />
+                </Link>
               }
             </div>
         }
