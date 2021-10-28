@@ -9,6 +9,7 @@ import Users from '../Users/Users';
 import Profile from '../Profile/Profile';
 import createTheme from '@mui/material/styles/createTheme';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import usersContext from "../../users.context";
 
 const useStyles = makeStyles((theme) => ({
   loginButtonBox: {
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const theme = createTheme();
   const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const classes = useStyles();
 
   const loginSuccess = (response) => {
@@ -30,24 +32,24 @@ function App() {
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <Header />
-        {!user
-          ?
-            <Box mt={24} className={classes.loginButtonBox}>
-              <GoogleLogin
-                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                buttonText="Login with Google"
-                onSuccess={loginSuccess}
-                cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
-              />
-            </Box>
-          :
+         <usersContext.Provider value={{ users, setUsers }}>
             <Switch>
-              <Route exact path="/" component={TimeZones} />
-              <Route path="/users" component={Users} />
-              <Route path="/profile" render={(props) => <Profile {...props} user={user}/>} />
+              <Route path="/timezones" render={(props) => <TimeZones {...props} users={users}/>} />
+              <Route exact path="/" render={(props) => <Users {...props} users={users}/>} />
+              <Route path="/profile" render={(props) => !user
+                  ?
+                  <Box mt={24} className={classes.loginButtonBox}>
+                      <GoogleLogin
+                          clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                          buttonText="Login with Google"
+                          onSuccess={loginSuccess}
+                          cookiePolicy={'single_host_origin'}
+                          isSignedIn={true}
+                      />
+                  </Box>
+                  : <Profile {...props} user={user}/>} />
             </Switch>
-        }
+        </usersContext.Provider>
       </ThemeProvider>
     </BrowserRouter>
   );
