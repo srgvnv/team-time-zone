@@ -1,0 +1,12 @@
+{
+  "working_hours": [
+    {
+      "start": "11AM",
+      "end": "1PM"
+    },
+    {
+      "start": "3PM",
+      "end": "7PM"
+    }
+  ]
+}

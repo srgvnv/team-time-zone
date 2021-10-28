@@ -7,11 +7,13 @@ import useTheme from '@mui/material/styles/useTheme';
 import makeStyles from '@mui/styles/makeStyles';
 import { Link } from 'react-router-dom';
 import DrawerComponent from '../Drawer/DrawerComponent';
+import {GoogleLogin, GoogleLogout} from 'react-google-login';
 
 const useStyles = makeStyles((theme) => ({
   navLinks: {
     marginLeft: theme.spacing(5),
     display: 'flex',
+    width: '100%',
   },
   logo: {
     cursor: 'pointer',
@@ -27,10 +29,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Header() {
+function Header(props) {
+  const {setUser, user} = props;
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const loginSuccess = (response) => {
+    setUser(response.profileObj);
+  }
+
+  const logOutSuccess = () => {
+    setUser(null);
+  }
 
   return (
     <AppBar position="static">
@@ -41,7 +52,7 @@ function Header() {
         </Typography>
         {isMobile
           ?
-            <DrawerComponent />
+            <DrawerComponent setUser={setUser} user={user}/>
           :
             <div className={classes.navLinks}>
               <Link to="/" className={classes.link}>
@@ -50,9 +61,29 @@ function Header() {
               <Link to="/users" className={classes.link}>
                 Users
               </Link>
-              <Link to="/profile" className={classes.link}>
+              {user
+              ? <Link to="/profile" className={classes.link}>
                 My profile
               </Link>
+              : null
+              }
+              {user ? <GoogleLogout
+                  clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                  onLogoutSuccess={logOutSuccess}
+                  render={(renderProps) => {
+                    return <a className={classes.link} href={'/'} onClick={renderProps.onClick} style={{marginLeft: 'auto'}}>Logout</a>
+                  }}
+                />
+                : <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                onSuccess={loginSuccess}
+                cookiePolicy={'single_host_origin'}
+                isSignedIn={true}
+                render={(renderProps) => {
+                return <a className={classes.link} href={'/'} onClick={renderProps.onClick} style={{marginLeft: 'auto'}}>Login</a>
+              }}
+                />
+              }
             </div>
         }
       </Toolbar>
